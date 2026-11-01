@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetaAI Fit – AI-Powered Personalized Fitness & Wellness Platform</title>
+  <meta name="description" content="MetaAI Fit creates personalized workout, nutrition and wellness plans based on your goals, lifestyle and fitness level.">
+  <meta property="og:title" content="MetaAI Fit – AI-Powered Personalized Fitness & Wellness Platform">
+  <meta property="og:description" content="AI-Powered Personalized Fitness & Wellness Platform for workouts, nutrition, wellness, and AI coaching.">
+  <meta property="og:type" content="website">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. NAVIGATION BAR
+       ========================================================================= -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚡</div>
+        <span>MetaAI <span>Fit</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links" id="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#features">Features</a>
+        <a href="#calculator">BMI & BMR</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <!-- Nav Actions (Login / CTA) -->
+      <div class="nav-actions">
+        <button id="nav-login-btn" class="btn btn-secondary" onclick="openModal('login-modal')">
+          Login
+        </button>
+        <button class="btn btn-primary" onclick="openModal('assessment-modal')">
+          Start AI Assessment
+        </button>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. HERO SECTION
+       ========================================================================= -->
+  <section class="hero-section" id="home">
+    <div class="container hero-grid">
+      
+      <!-- Hero Left Content -->
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span class="pulse-dot"></span>
+          <span>Next-Generation AI Wellness Engine</span>
+        </div>
+
+        <h1 class="hero-heading">
+          Your Fitness Journey, <br>
+          <span class="highlight">Powered by AI.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          MetaAI Fit creates personalized workout, nutrition and wellness plans based on your goals, lifestyle and fitness level.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="openModal('assessment-modal')">
+            ⚡ Start AI Assessment
+          </button>
+          <a href="#features" class="btn btn-secondary">
+            Explore Features ↓
+          </a>
+        </div>
+
+        <!-- Social Proof Stats -->
+        <div class="hero-social-proof">
+          <div class="avatar-group">
+            <div class="avatar-chip">BS</div>
+            <div class="avatar-chip">AK</div>
+            <div class="avatar-chip">MR</div>
+            <div class="avatar-chip">+</div>
+          </div>
+          <div class="social-proof-text">
+            <strong>15,000+</strong> fitness enthusiasts achieving their dream physique with MetaAI.
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Right Visual Card -->
+      <div class="hero-visual">
+        <!-- Floating Chips -->
+        <div class="floating-chip chip-top">
+          <div class="chip-icon icon-green">🥗</div>
+          <div>
+            <div class="chip-title">AI Calorie Target</div>
+            <div class="chip-value">2,100 kcal / day</div>
+          </div>
+        </div>
+
+        <div class="floating-chip chip-bottom">
+          <div class="chip-icon icon-red">❤️</div>
+          <div>
+            <div class="chip-title">Resting Heart Rate</div>
+            <div class="chip-value">72 bpm (Optimal)</div>
+          </div>
+        </div>
+
+        <!-- Fitness Dashboard Score Card -->
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div>
+              <div class="hero-card-title">Fitness Score Index</div>
+              <span style="font-size:0.8rem;color:var(--text-muted);">Real-time biometric balance</span>
+            </div>
+            <span class="badge badge-green">AI Active</span>
+          </div>
+
+          <!-- Circular Score Indicator -->
+          <div class="score-display-wrapper">
+            <div class="score-ring-container">
+              <svg class="score-ring-svg" viewBox="0 0 160 160">
+                <circle class="score-ring-bg" cx="80" cy="80" r="70"></circle>
+                <circle id="hero-ring-bar" class="score-ring-bar" cx="80" cy="80" r="70"></circle>
+              </svg>
+              <div class="score-text-inner">
+                <div class="score-number" id="hero-score-num">82</div>
+                <div class="score-label">Fitness Score</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Stat Numbers -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <div class="stat-num">12</div>
+              <div class="stat-lbl">Workouts</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="stat-num">8</div>
+              <div class="stat-lbl">Goals</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="stat-num">5</div>
+              <div class="stat-lbl">Badges</div>
+            </div>
+          </div>
+
+          <!-- Progress Indicator -->
+          <div class="hero-progress-block">
+            <div class="progress-header">
+              <span>Weekly Completion</span>
+              <span style="color:var(--primary);">85% On Track</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. FEATURES SECTION
+       ========================================================================= -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Comprehensive Platform</span>
+        <h2 class="section-title">Everything You Need To Elevate Your Health</h2>
+        <p class="section-subtitle">Intelligent algorithms and tailored health protocols working together for measurable, lasting transformation.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🧠</div>
+            <h3 class="feature-title">AI Fitness Assessment</h3>
+            <p class="feature-description">
+              Analyze body composition, metabolic markers, and fitness goals to compute an accurate baseline Fitness Score and bespoke plan.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('assessment-modal')">
+            Take Assessment →
+          </button>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🏋️</div>
+            <h3 class="feature-title">Personalized Workouts</h3>
+            <p class="feature-description">
+              Custom resistance, cardio, core, and mobility routines generated dynamically to match your available time, equipment, and strength level.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            View Workouts →
+          </button>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🥗</div>
+            <h3 class="feature-title">AI Nutrition</h3>
+            <p class="feature-description">
+              Macro-balanced dietary blueprints calculated using Harris-Benedict formulas with support for Vegetarian, Vegan, Keto, and High-Protein diets.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            Explore Nutrition →
+          </button>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🌊</div>
+            <h3 class="feature-title">Wellness Tracking</h3>
+            <p class="feature-description">
+              Holistic wellness monitors for sleep duration, mindful guided breathing, interactive hydration tracking, and daily mood evaluation.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            Track Wellness →
+          </button>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🤖</div>
+            <h3 class="feature-title">AI Fitness Coach</h3>
+            <p class="feature-description">
+              Instant 24/7 fitness advisory chatbot answering your questions on workout routines, meal choices, hydration targets, and DOMS recovery.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            Chat with Coach →
+          </button>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">📈</div>
+            <h3 class="feature-title">Progress Tracking</h3>
+            <p class="feature-description">
+              Visual analytics with 7-day calorie burn charts, daily step milestones, sleep graphs, and habit consistency streaks.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            Check Progress →
+          </button>
+        </div>
+
+        <!-- Feature 7 -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🏆</div>
+            <h3 class="feature-title">Achievements</h3>
+            <p class="feature-description">
+              Gamified milestone badges rewarding consistency, hydration excellence, high-calorie burn streaks, and progressive fitness milestones.
+            </p>
+          </div>
+          <button class="feature-btn" onclick="openModal('login-modal')">
+            View Badges →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       STANDALONE BMI & BMR CALCULATOR SECTION (Instant, No Login Required)
+       ========================================================================= -->
+  <section class="calculator-section" id="calculator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Instant Biometrics</span>
+        <h2 class="section-title">BMI & BMR Metabolic Calculator</h2>
+        <p class="section-subtitle">
+          Calculate your Body Mass Index (BMI), Basal Metabolic Rate (BMR), and daily maintenance calories instantly—no signup needed.
+        </p>
+      </div>
+
+      <div class="calc-container-card">
+        <!-- Left: Inputs -->
+        <div class="calc-inputs-col">
+          <h3>Your Measurements</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">
+            Adjust values below for live recalculation.
+          </p>
+
+          <form id="standalone-calc-form" onsubmit="event.preventDefault();">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="sc-age">Age (years)</label>
+                <input type="number" id="sc-age" class="form-control" value="22" min="12" max="100">
+              </div>
+              <div class="form-group">
+                <label for="sc-gender">Gender</label>
+                <select id="sc-gender" class="form-control">
+                  <option value="Female" selected>Female</option>
+                  <option value="Male">Male</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top:1rem;">
+              <div class="form-group">
+                <label for="sc-height">Height (cm)</label>
+                <input type="number" id="sc-height" class="form-control" value="165" min="100" max="240">
+              </div>
+              <div class="form-group">
+                <label for="sc-weight">Weight (kg)</label>
+                <input type="number" id="sc-weight" class="form-control" value="60" min="30" max="250">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="sc-activity">Daily Activity Level</label>
+              <select id="sc-activity" class="form-control">
+                <option value="1.2">Sedentary (Little or no exercise)</option>
+                <option value="1.375">Lightly Active (Exercise 1-3 days/week)</option>
+                <option value="1.55" selected>Moderately Active (Exercise 3-5 days/week)</option>
+                <option value="1.725">Very Active (Hard exercise 6-7 days/week)</option>
+              </select>
+            </div>
+
+            <button type="button" id="sc-calc-btn" class="btn btn-primary btn-block" style="margin-top:1.5rem;" onclick="calculateStandaloneBiometrics()">
+              ⚡ Recalculate Metrics
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Results -->
+        <div class="calc-results-col">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="badge badge-green" id="sc-bmi-category">Normal Weight</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">WHO Standards</span>
+            </div>
+
+            <div style="margin:1rem 0;">
+              <div style="font-size:0.85rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;">Body Mass Index (BMI)</div>
+              <div style="font-size:2.8rem;font-weight:800;color:var(--dark);line-height:1;" id="sc-bmi-value">
+                22.0
+              </div>
+            </div>
+
+            <!-- Visual BMI Color Spectrum -->
+            <div class="bmi-meter-wrap">
+              <div class="bmi-spectrum-bar">
+                <div class="bmi-indicator-pin" id="sc-bmi-pin" style="left: 45%;"></div>
+              </div>
+              <div class="bmi-spectrum-labels">
+                <span>Underweight (&lt;18.5)</span>
+                <span>Normal (18.5-24.9)</span>
+                <span>Overweight (25-29.9)</span>
+                <span>Obese (30+)</span>
+              </div>
+            </div>
+
+            <!-- BMR & TDEE Stat Boxes -->
+            <div class="bmr-metrics-row">
+              <div class="bmr-stat-box">
+                <div class="box-lbl">Basal Metabolic Rate (BMR)</div>
+                <div class="box-val" id="sc-bmr-val">1,370</div>
+                <span style="font-size:0.75rem;color:var(--text-muted);">kcal burned at rest</span>
+              </div>
+              <div class="bmr-stat-box">
+                <div class="box-lbl">Daily Maintenance (TDEE)</div>
+                <div class="box-val" id="sc-tdee-val" style="color:#2563EB;">2,124</div>
+                <span style="font-size:0.75rem;color:var(--text-muted);">kcal to maintain weight</span>
+              </div>
+            </div>
+
+            <!-- Caloric Target Tiers -->
+            <div style="margin-top:1rem;">
+              <div style="font-size:0.8rem;font-weight:700;color:var(--dark);margin-bottom:0.4rem;">Caloric Tiers by Goal:</div>
+              <div class="calorie-tiers-grid">
+                <div class="tier-item">
+                  <div class="t-lbl">Fat Loss (-450 kcal)</div>
+                  <div class="t-cal" id="sc-cut-val" style="color:var(--primary);">1,674 kcal</div>
+                </div>
+                <div class="tier-item">
+                  <div class="t-lbl">Maintain Weight</div>
+                  <div class="t-cal" id="sc-maint-val">2,124 kcal</div>
+                </div>
+                <div class="tier-item">
+                  <div class="t-lbl">Muscle Gain (+300 kcal)</div>
+                  <div class="t-cal" id="sc-bulk-val" style="color:#D97706;">2,424 kcal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.82rem;color:var(--text-muted);">Want a full personalized routine?</span>
+            <button class="btn btn-outline btn-sm" onclick="openModal('assessment-modal')">
+              Take Full AI Assessment →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. HOW IT WORKS SECTION
+       ========================================================================= -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Simple 4-Step Process</span>
+        <h2 class="section-title">How MetaAI Fit Works</h2>
+        <p class="section-subtitle">From baseline evaluation to real-time daily coaching in under 3 minutes.</p>
+      </div>
+
+      <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon">👤</div>
+          <h3 class="step-title">Create Your Profile</h3>
+          <p class="step-desc">Enter your basic biometrics, age, weight, and lifestyle preferences to establish your fitness foundation.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon">📊</div>
+          <h3 class="step-title">Complete AI Assessment</h3>
+          <p class="step-desc">Share your specific goals, workout availability, and dietary choices to generate a personalized wellness formula.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon">📋</div>
+          <h3 class="step-title">Get Personalized Plan</h3>
+          <p class="step-desc">Receive your custom workout routines, daily calorie targets, hydration goals, and AI coach recommendations.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-icon">🎯</div>
+          <h3 class="step-title">Track Your Progress</h3>
+          <p class="step-desc">Log your daily activities, interact with your AI coach, earn achievement badges, and celebrate milestones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. ABOUT SECTION
+       ========================================================================= -->
+  <section class="about-section" id="about">
+    <div class="container about-grid">
+      <div>
+        <span class="section-tag">About MetaAI Fit</span>
+        <h2 class="section-title">Bridging Sports Science and Artificial Intelligence</h2>
+        <p style="color:var(--text-muted);font-size:1.05rem;line-height:1.6;margin-bottom:1.2rem;">
+          MetaAI Fit was engineered to democratize elite fitness coaching. By analyzing biometric indicators and metabolic patterns, our platform creates dynamic wellness roadmaps that evolve as you get stronger.
+        </p>
+        
+        <div class="about-feature-list">
+          <div class="about-feature-item">
+            <span class="about-check">✓</span>
+            <span>Evidence-based metabolic and BMR calculation models</span>
+          </div>
+          <div class="about-feature-item">
+            <span class="about-check">✓</span>
+            <span>Zero equipment, gym, or home workout flexibility</span>
+          </div>
+          <div class="about-feature-item">
+            <span class="about-check">✓</span>
+            <span>Integrated mental wellness, sleep, and hydration synergy</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="openModal('assessment-modal')">
+          Get Started Today →
+        </button>
+      </div>
+
+      <div class="about-stats-grid">
+        <div class="about-stat-card">
+          <div class="about-stat-number">15K+</div>
+          <div class="about-stat-label">Active Users</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-number">94%</div>
+          <div class="about-stat-label">Goal Completion Rate</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-number">500K+</div>
+          <div class="about-stat-label">Custom Meals Planned</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-number">4.9★</div>
+          <div class="about-stat-label">Community Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. CONTACT SECTION
+       ========================================================================= -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-info-col">
+          <span class="section-tag">Get In Touch</span>
+          <h3>Have Questions or Feedback?</h3>
+          <p>We are here to support your fitness journey. Reach out anytime and our wellness advisors will respond within 24 hours.</p>
+
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <strong>Headquarters</strong>
+              <div style="color:var(--text-muted);font-size:0.88rem;">MetaAI Tech Campus, Silicon Valley</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <strong>Email Inquiries</strong>
+              <div style="color:var(--text-muted);font-size:0.88rem;">support@metaaifit.com</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <strong>Helpline</strong>
+              <div style="color:var(--text-muted);font-size:0.88rem;">+1 (800) 456-META</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="c-name">Full Name</label>
+            <input type="text" id="c-name" class="form-control" placeholder="Bhavya Sri" required>
+          </div>
+          <div class="form-group">
+            <label for="c-email">Email Address</label>
+            <input type="email" id="c-email" class="form-control" placeholder="bhavya@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" class="form-control" placeholder="Ask about fitness plans, features, or college WT demo..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            Send Message ✉
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. FOOTER
+       ========================================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon">⚡</div>
+            <span>MetaAI <span>Fit</span></span>
+          </a>
+          <p>
+            AI-powered fitness, personalized nutrition, and holistic wellness monitoring engineered for sustainable lifestyle health.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <div class="footer-links">
+            <a href="javascript:void(0)" onclick="openModal('assessment-modal')">AI Assessment</a>
+            <a href="javascript:void(0)" onclick="openModal('login-modal')">Member Login</a>
+            <a href="javascript:void(0)" onclick="openModal('signup-modal')">Create Account</a>
+            <a href="dashboard.html">Member Dashboard</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Academic Notice</h4>
+          <p style="font-size:0.85rem;color:#94A3B8;line-height:1.5;">
+            Developed as a Web Technologies (WT) Academic Project demonstrating responsive HTML5, CSS3, and JavaScript integration.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 MetaAI Fit Platform. All Rights Reserved.</div>
+        <div>Built with Clean HTML5, CSS3 & JavaScript</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       8. MODAL: AI ASSESSMENT
+       ========================================================================= -->
+  <div class="modal-overlay" id="assessment-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>⚡ AI Fitness Assessment</h3>
+        <button class="modal-close-btn" onclick="closeModal('assessment-modal')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">
+          Complete your profile metrics. Our AI algorithm will calculate your baseline Fitness Score and generate a custom wellness recommendation.
+        </p>
+
+        <form id="ai-assessment-form">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="assess-age">Age</label>
+              <input type="number" id="assess-age" class="form-control" value="22" min="14" max="99" required>
+            </div>
+            <div class="form-group">
+              <label for="assess-gender">Gender</label>
+              <select id="assess-gender" class="form-control" required>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-top:1rem;">
+            <div class="form-group">
+              <label for="assess-height">Height (cm)</label>
+              <input type="number" id="assess-height" class="form-control" value="165" min="100" max="230" required>
+            </div>
+            <div class="form-group">
+              <label for="assess-weight">Weight (kg)</label>
+              <input type="number" id="assess-weight" class="form-control" value="60" min="30" max="250" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-top:1rem;">
+            <div class="form-group">
+              <label for="assess-level">Fitness Level</label>
+              <select id="assess-level" class="form-control" required>
+                <option value="Beginner">Beginner (0-6 months)</option>
+                <option value="Intermediate" selected>Intermediate (6-24 months)</option>
+                <option value="Advanced">Advanced (2+ years)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="assess-goal">Fitness Goal</label>
+              <select id="assess-goal" class="form-control" required>
+                <option value="Weight Loss">Weight Loss</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+                <option value="Improve Fitness" selected>Improve Fitness</option>
+                <option value="Improve Health">Improve Health</option>
+                <option value="Increase Strength">Increase Strength</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-top:1rem;">
+            <div class="form-group">
+              <label for="assess-activity">Activity Level</label>
+              <select id="assess-activity" class="form-control" required>
+                <option value="Sedentary">Sedentary (Desk Job)</option>
+                <option value="Lightly Active">Lightly Active (1-3 days/wk)</option>
+                <option value="Moderately Active" selected>Moderately Active (3-5 days/wk)</option>
+                <option value="Very Active">Very Active (6-7 days/wk)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="assess-time">Available Workout Time</label>
+              <select id="assess-time" class="form-control" required>
+                <option value="15-30 mins">15 - 30 mins</option>
+                <option value="30-45 mins">30 - 45 mins</option>
+                <option value="45-60 mins" selected>45 - 60 mins</option>
+                <option value="60+ mins">60+ mins</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="assess-diet">Dietary Preference</label>
+            <select id="assess-diet" class="form-control" required>
+              <option value="Standard/Non-Veg">Standard / Non-Vegetarian</option>
+              <option value="Vegetarian" selected>Vegetarian</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Keto">Keto / Low-Carb</option>
+              <option value="High-Protein">High-Protein Fitness</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;">
+            Calculate My AI Recommendation ⚡
+          </button>
+        </form>
+
+        <!-- Dynamic Results Container -->
+        <div id="assessment-result-container" class="assessment-result-card">
+          <div class="result-score-banner">
+            <div>
+              <span style="font-size:0.8rem;text-transform:uppercase;color:#94A3B8;">Calculated Baseline</span>
+              <h4>Your MetaAI Fitness Score</h4>
+            </div>
+            <div class="result-score-num" id="res-score">82</div>
+          </div>
+
+          <div class="result-metrics-grid">
+            <div class="metric-pill">
+              <div class="lbl">Recommended Workout</div>
+              <div class="val" id="res-workout" style="font-size:0.95rem;">Full-Body Strength</div>
+            </div>
+            <div class="metric-pill">
+              <div class="lbl">Recommended Calories</div>
+              <div class="val" id="res-calories">2,100 kcal / day</div>
+            </div>
+            <div class="metric-pill">
+              <div class="lbl">Water Recommendation</div>
+              <div class="val" id="res-water">2.8 L / day</div>
+            </div>
+            <div class="metric-pill">
+              <div class="lbl">Daily Activity Target</div>
+              <div class="val" id="res-activity" style="font-size:0.92rem;">45-60 min Moderately Active</div>
+            </div>
+          </div>
+
+          <div class="medical-disclaimer">
+            <strong>⚠️ Medical Disclaimer:</strong> This is a demo personalized fitness recommendation generated for demonstration purposes and not medical advice. Always consult a healthcare professional before starting an intensive workout or diet protocol.
+          </div>
+
+          <button class="btn btn-primary btn-block" style="margin-top:1.2rem;" onclick="proceedToDashboard()">
+            Save & Open My Dashboard →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       9. MODAL: LOGIN
+       ========================================================================= -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3>Member Login</h3>
+        <button class="modal-close-btn" onclick="closeModal('login-modal')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">
+          Sign in to access your MetaAI Fit personalized dashboard and coaching.
+        </p>
+
+        <form id="modal-login-form">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="bhavya@metaaifit.com" value="bhavya@metaaifit.com" required>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="demo1234" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;">
+            Login to Dashboard →
+          </button>
+        </form>
+
+        <div style="text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);">
+          Don't have an account yet? 
+          <a href="javascript:void(0)" onclick="switchToSignup()" style="color:var(--primary);font-weight:700;">
+            Create Account
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       10. MODAL: SIGN UP
+       ========================================================================= -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal-box" style="max-width: 460px;">
+      <div class="modal-header">
+        <h3>Create Your Account</h3>
+        <button class="modal-close-btn" onclick="closeModal('signup-modal')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">
+          Join MetaAI Fit today and unlock your personalized fitness protocols.
+        </p>
+
+        <form id="modal-signup-form">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" class="form-control" placeholder="Bhavya Sri" required>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" class="form-control" placeholder="bhavya@metaaifit.com" required>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" class="form-control" placeholder="At least 6 characters" required>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="signup-confirm-password">Confirm Password</label>
+            <input type="password" id="signup-confirm-password" class="form-control" placeholder="Repeat password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1.5rem;">
+            Create Account & Login →
+          </button>
+        </form>
+
+        <div style="text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);">
+          Already have an account? 
+          <a href="javascript:void(0)" onclick="switchToLogin()" style="color:var(--primary);font-weight:700;">
+            Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "MetaAI Fit – AI-Powered Fitness & Wellness Platform",
+  "description": "AI-Powered Personalized Fitness & Wellness Platform for workouts, nutrition, wellness, and AI coaching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

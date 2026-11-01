@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – MetaAI Fit</title>
+  <meta name="description" content="MetaAI Fit User Dashboard – Track personalized workouts, nutrition, wellness, and chat with your AI fitness coach.">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+
+    <!-- =======================================================================
+         SIDEBAR NAVIGATION
+         ======================================================================= -->
+    <aside class="dashboard-sidebar" id="dashboard-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon">⚡</div>
+            <span>MetaAI <span>Fit</span></span>
+          </a>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-target="section-overview">
+            <span class="nav-icon">📊</span>
+            <span>Dashboard</span>
+          </button>
+
+          <button class="nav-item" data-target="section-workouts">
+            <span class="nav-icon">🏋️</span>
+            <span>Workout</span>
+          </button>
+
+          <button class="nav-item" data-target="section-nutrition">
+            <span class="nav-icon">🥗</span>
+            <span>Nutrition</span>
+          </button>
+
+          <button class="nav-item" data-target="section-wellness">
+            <span class="nav-icon">🌊</span>
+            <span>Wellness</span>
+          </button>
+
+          <button class="nav-item" data-target="section-ai-coach">
+            <span class="nav-icon">🤖</span>
+            <span>AI Coach</span>
+          </button>
+
+          <button class="nav-item" data-target="section-progress">
+            <span class="nav-icon">📈</span>
+            <span>Progress</span>
+          </button>
+
+          <button class="nav-item" data-target="section-achievements">
+            <span class="nav-icon">🏆</span>
+            <span>Achievements</span>
+          </button>
+
+          <button class="nav-item" data-target="section-profile">
+            <span class="nav-icon">👤</span>
+            <span>Profile</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Sidebar Footer (Logout) -->
+      <div class="sidebar-footer">
+        <button class="nav-item sidebar-logout" onclick="handleLogout()">
+          <span class="nav-icon">🚪</span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         MAIN CONTENT AREA
+         ======================================================================= -->
+    <main class="dashboard-main">
+
+      <!-- Topbar Header -->
+      <header class="dashboard-topbar">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="topbar-mobile-toggle" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+            ☰
+          </button>
+          <div class="user-greeting">
+            <h2>Welcome back, <span id="user-greeting-name">Bhavya</span>! 👋</h2>
+            <p id="dashboard-today-date">Thursday, October 2, 2026</p>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="logWaterQuick()">
+            💧 +250ml Water
+          </button>
+
+          <div class="user-profile-badge" onclick="document.querySelector('[data-target=\'section-profile\']').click()">
+            <div class="user-avatar-circle" id="user-avatar-initial">B</div>
+            <span class="uname" id="user-badge-name">Bhavya</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Sections Container -->
+      <div class="dashboard-content">
+
+        <!-- ===================================================================
+             1. MAIN DASHBOARD OVERVIEW SECTION
+             =================================================================== -->
+        <section class="dashboard-section active-section" id="section-overview">
+          
+          <!-- Today's AI Recommendation Banner -->
+          <div class="ai-recommendation-card">
+            <div class="ai-rec-left">
+              <div class="ai-rec-icon">✨</div>
+              <div>
+                <div class="ai-rec-tag">Today's AI Recommendation</div>
+                <div class="ai-rec-text">
+                  "Based on your activity, try a 30-minute strength workout today and remember to stay hydrated."
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="document.querySelector('[data-target=\'section-workouts\']').click()">
+              Start Recommended Workout ▶
+            </button>
+          </div>
+
+          <!-- Today's 4 Overview Metric Cards -->
+          <div class="metrics-row">
+            <!-- Metric 1: Calories (Workout Burned vs Nutrition Taken) -->
+            <div class="metric-card" id="card-metric-calories">
+              <div class="metric-header">
+                <div>
+                  <span class="m-title">Daily Calories</span>
+                  <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;display:block;">Workout Burn vs Food Intake</span>
+                </div>
+                <div class="metric-icon-wrap" style="background:#FEE2E2;color:#EF4444;">🔥</div>
+              </div>
+
+              <!-- Dual Calories Display: Workout Completed vs Nutrition Taken -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin:0.5rem 0 0.8rem;">
+                <div style="background:var(--bg);padding:0.5rem 0.6rem;border-radius:var(--radius-sm);border:1px solid var(--border);">
+                  <div style="font-size:0.68rem;font-weight:700;color:#EF4444;text-transform:uppercase;">🔥 Burned (Workouts)</div>
+                  <div style="font-size:1.2rem;font-weight:800;color:var(--dark);margin-top:0.15rem;" id="metric-calories-burned">420 kcal</div>
+                </div>
+                <div style="background:var(--bg);padding:0.5rem 0.6rem;border-radius:var(--radius-sm);border:1px solid var(--border);">
+                  <div style="font-size:0.68rem;font-weight:700;color:var(--primary);text-transform:uppercase;">🥗 Taken (Meals)</div>
+                  <div style="font-size:1.2rem;font-weight:800;color:var(--dark);margin-top:0.15rem;" id="metric-calories-taken">1,640 kcal</div>
+                </div>
+              </div>
+
+              <div class="progress-bar-bg" style="height:7px;">
+                <div id="metric-calories-bar" class="progress-bar-fill" style="width: 70%; background: linear-gradient(90deg, #EF4444, #F59E0B);"></div>
+              </div>
+              <div class="metric-footer-text" style="margin-top:0.4rem;">
+                <span id="metric-calories-status">Workout Burn Goal: 70%</span>
+                <span id="metric-net-balance" style="font-weight:700;color:var(--primary);">Net: +1,220 kcal</span>
+              </div>
+            </div>
+
+            <!-- Metric 2: Steps (Updated by user based on time and customized) -->
+            <div class="metric-card" id="card-metric-steps">
+              <div class="metric-header">
+                <div>
+                  <span class="m-title">Daily Steps</span>
+                  <span style="font-size:0.72rem;color:#2563EB;font-weight:700;display:block;">Customized by Time</span>
+                </div>
+                <button class="btn btn-outline btn-xs" onclick="openStepsModal()" title="Log steps based on time" style="font-size:0.72rem;padding:0.25rem 0.65rem;border-radius:var(--radius-full);">
+                  + Log Steps
+                </button>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-main-val" id="metric-steps">7,842</div>
+                <div class="metric-target-val">/ <span id="metric-steps-target">10,000</span></div>
+              </div>
+              <div class="progress-bar-bg">
+                <div id="metric-steps-bar" class="progress-bar-fill" style="width: 78%; background: #2563EB;"></div>
+              </div>
+              <div class="metric-footer-text">
+                <span id="metric-steps-pct">Daily Target: 78%</span>
+                <span id="metric-steps-left">2,158 steps left</span>
+              </div>
+            </div>
+
+            <!-- Metric 3: Water Intake -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="m-title">Water Intake</span>
+                <div class="metric-icon-wrap" style="background:var(--primary-light);color:var(--primary);">💧</div>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-main-val" id="metric-water">1.8 L</div>
+                <div class="metric-target-val">/ 3.0 L</div>
+              </div>
+              <div class="progress-bar-bg">
+                <div id="metric-water-bar" class="progress-bar-fill" style="width: 60%; background: var(--primary);"></div>
+              </div>
+              <div class="metric-footer-text">
+                <span id="metric-water-pct-sub">Hydration: 60%</span>
+                <button onclick="logWaterQuick()" style="border:none;background:none;color:var(--primary);cursor:pointer;font-weight:700;">+ Log Glass</button>
+              </div>
+            </div>
+
+            <!-- Metric 4: Sleep Duration (Updated using Wellness Category) -->
+            <div class="metric-card" id="card-metric-sleep">
+              <div class="metric-header">
+                <div>
+                  <span class="m-title">Sleep Duration</span>
+                  <span style="font-size:0.72rem;color:#9333EA;font-weight:700;display:block;">Wellness Category</span>
+                </div>
+                <button class="btn btn-outline btn-xs" onclick="navigateToWellnessSleep()" title="Update sleep duration in Wellness" style="font-size:0.72rem;padding:0.25rem 0.65rem;border-radius:var(--radius-full);">
+                  ✏️ Edit in Wellness
+                </button>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-main-val" id="metric-sleep">7.5 hrs</div>
+                <div class="metric-target-val">/ 8.0 hrs</div>
+              </div>
+              <div class="progress-bar-bg">
+                <div id="metric-sleep-bar" class="progress-bar-fill" style="width: 94%; background: #9333EA;"></div>
+              </div>
+              <div class="metric-footer-text">
+                <span id="metric-sleep-pct">Rest Quality: 88%</span>
+                <span id="metric-sleep-note" style="color:var(--success);font-weight:600;">Maintained via Wellness ✓</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Overview Widgets: Quick Schedule & Meals -->
+          <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;">
+            <!-- Next Workout Card -->
+            <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.8rem;box-shadow:var(--shadow-sm);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+                <h3 style="font-size:1.15rem;font-weight:700;color:var(--dark);">Today's Scheduled Routine</h3>
+                <span class="badge badge-green">Recommended</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:1.2rem;background:var(--bg);padding:1.2rem;border-radius:var(--radius-md);margin-bottom:1.2rem;">
+                <div style="width:52px;height:52px;border-radius:var(--radius-md);background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--primary);">
+                  🏋️
+                </div>
+                <div style="flex-grow:1;">
+                  <h4 style="font-size:1.05rem;font-weight:700;color:var(--dark);">Full Body Strength & Core</h4>
+                  <div style="font-size:0.85rem;color:var(--text-muted);display:flex;gap:1rem;margin-top:0.2rem;">
+                    <span>⏱ 45 Minutes</span>
+                    <span>🔥 ~360 kcal</span>
+                    <span>⚡ Intermediate</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:1rem;">
+                <button class="btn btn-primary" style="flex:1;" onclick="startWorkoutSession(1, 'Full Body Strength')">
+                  Start Workout Now ▶
+                </button>
+                <button class="btn btn-secondary" onclick="document.querySelector('[data-target=\'section-workouts\']').click()">
+                  View All Workouts
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Nutrition Snapshot -->
+            <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.8rem;box-shadow:var(--shadow-sm);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+                <h3 style="font-size:1.15rem;font-weight:700;color:var(--dark);">Today's Nutrition Snapshot</h3>
+                <span class="badge badge-blue">1,640 / 2,100 kcal</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.9rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border-light);">
+                  <span style="font-size:0.92rem;font-weight:600;">🥣 Oatmeal & Fresh Berries</span>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">380 kcal (Breakfast)</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border-light);">
+                  <span style="font-size:0.92rem;font-weight:600;">🥗 Rice & Grilled Vegetables</span>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">560 kcal (Lunch)</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;">
+                  <span style="font-size:0.92rem;font-weight:600;">🍲 High-Protein Lentil Bowl</span>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">620 kcal (Dinner)</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-block btn-sm" style="margin-top:1.2rem;" onclick="document.querySelector('[data-target=\'section-nutrition\']').click()">
+                Manage Nutrition Plan →
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             2. WORKOUT SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-workouts">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <div>
+              <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Personalized Workouts</h2>
+              <p style="color:var(--text-muted);">Custom routines with live posture guides, timer pacing by day, and stress adaptation.</p>
+            </div>
+            <span class="badge badge-green" id="active-day-badge">Today: Thursday Schedule</span>
+          </div>
+
+          <!-- 1. Day-of-the-Week Schedule & Pacing Timer Banner -->
+          <div class="day-schedule-card">
+            <div class="day-schedule-info">
+              <div class="day-badge-icon" id="day-icon">📅</div>
+              <div>
+                <div style="display:flex;align-items:center;gap:0.6rem;">
+                  <h4 style="font-size:1.15rem;font-weight:800;color:var(--dark);" id="day-title-text">Thursday – Active Mobility & Recovery</h4>
+                  <span class="badge badge-blue" id="day-timer-badge">45s Timer Pacing</span>
+                </div>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;" id="day-desc-text">
+                  Optimal mid-week restoration protocol focusing on joint decompression, hip mobility, and posture resetting.
+                </p>
+              </div>
+            </div>
+
+            <!-- Day Selector Pills -->
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Monday')">Mon</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Tuesday')">Tue</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Wednesday')">Wed</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Thursday')">Thu</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Friday')">Fri</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Saturday')">Sat</button>
+              <button class="btn btn-secondary btn-sm" onclick="setDayProtocol('Sunday')">Sun</button>
+            </div>
+          </div>
+
+          <!-- 2. Stress-Level Adaptive Workout Planner -->
+          <div class="stress-planner-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+              <div>
+                <span class="badge badge-green">AI Biometric Adaptation</span>
+                <h3 style="font-size:1.2rem;font-weight:800;color:var(--dark);margin-top:0.3rem;">Workout Adaptation by Stress Level</h3>
+                <p style="font-size:0.85rem;color:var(--text-muted);">
+                  Select your current fatigue / stress level to let MetaAI automatically adapt workout intensity and recovery demand:
+                </p>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">Current Stress Index:</span>
+                <div style="font-size:1.3rem;font-weight:800;color:var(--primary);" id="stress-index-display">24 / 100 (Low)</div>
+              </div>
+            </div>
+
+            <!-- Stress Selector Pills -->
+            <div class="stress-pills-row">
+              <button class="stress-pill-btn active" id="stress-pill-low" onclick="applyStressAdaptation('low')">
+                <span>🟢</span>
+                <span>Low Stress (0 - 35) • Prime Readiness</span>
+              </button>
+              <button class="stress-pill-btn" id="stress-pill-moderate" onclick="applyStressAdaptation('moderate')">
+                <span>🟡</span>
+                <span>Moderate Stress (36 - 65) • Steady State</span>
+              </button>
+              <button class="stress-pill-btn" id="stress-pill-high" onclick="applyStressAdaptation('high')">
+                <span>🔴</span>
+                <span>High Stress (66 - 100) • Active Recovery</span>
+              </button>
+            </div>
+
+            <!-- Adaptive Plan Banner -->
+            <div class="stress-plan-banner" id="stress-advice-banner">
+              <div>
+                <div style="font-size:0.8rem;font-weight:700;color:var(--primary);text-transform:uppercase;">AI Workout Prescription</div>
+                <div style="font-weight:700;color:var(--dark);font-size:1rem;margin-top:0.2rem;" id="stress-rec-title">
+                  Maximum Readiness Zone – Heavy Resistance & Strength Training
+                </div>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;" id="stress-rec-desc">
+                  Your nervous system is primed with high Heart Rate Variability. Great day for Full Body Strength or Athletic Conditioning.
+                </p>
+              </div>
+              <button class="btn btn-primary btn-sm" id="stress-rec-btn" onclick="startRecommendedStressWorkout()">
+                Start Adapted Workout ▶
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Workouts Grid rendered by script.js -->
+          <div class="workouts-grid" id="workouts-container"></div>
+        </section>
+
+        <!-- ===================================================================
+             3. NUTRITION SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-nutrition">
+          <div style="margin-bottom:2rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">AI Nutrition & Meal Tracker</h2>
+            <p style="color:var(--text-muted);">Personalized caloric budget and macronutrient distribution.</p>
+          </div>
+
+          <div class="nutrition-grid">
+            <!-- Calorie & Macro Target Card with Dynamic Chart -->
+            <div class="nutrition-summary-card">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.5rem;">
+                <div>
+                  <span class="badge badge-green" style="margin-bottom:0.6rem;">Daily Calorie & Protein Budget</span>
+                  <div style="font-size:2.6rem;font-weight:800;color:var(--dark);line-height:1.1;">
+                    <span id="nutrition-consumed-kcal">1,640</span> <span style="font-size:1.1rem;color:var(--text-muted);font-weight:500;">/ <span id="nutrition-target-kcal">2,100</span> kcal</span>
+                  </div>
+                  <p style="font-size:0.88rem;color:var(--text-muted);margin-top:0.3rem;">
+                    <span id="nutrition-remaining-kcal" style="font-weight:700;color:var(--primary);">460</span> kcal remaining today
+                  </p>
+                </div>
+
+                <!-- Circular SVG Calorie & Protein Budget Ring Chart -->
+                <div class="budget-chart-wrapper">
+                  <svg class="budget-ring-svg" viewBox="0 0 130 130">
+                    <circle class="ring-track" cx="65" cy="65" r="52"></circle>
+                    <circle id="calorie-budget-ring" class="ring-fill-calories" cx="65" cy="65" r="52"></circle>
+                    <circle class="ring-track-inner" cx="65" cy="65" r="40"></circle>
+                    <circle id="protein-budget-ring" class="ring-fill-protein" cx="65" cy="65" r="40"></circle>
+                  </svg>
+                  <div class="budget-chart-center">
+                    <span id="budget-chart-pct" style="font-size:1.25rem;font-weight:800;color:var(--dark);">78%</span>
+                    <span style="font-size:0.65rem;color:var(--text-muted);font-weight:700;">BUDGET</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Macro breakdown with live protein progress -->
+              <div class="macro-bars-list">
+                <!-- Protein (User requested focus!) -->
+                <div class="macro-bar-item">
+                  <div class="m-lbl">
+                    <span style="font-weight:700;color:var(--dark);">🥩 Protein (<span id="macro-protein-val" style="color:var(--primary);font-weight:800;">120</span>g / <span id="macro-protein-target">150</span>g)</span>
+                    <strong style="color:var(--primary);" id="macro-protein-pct">80%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="height:10px;">
+                    <div id="macro-protein-bar" class="progress-bar-fill" style="width: 80%; background: linear-gradient(90deg, #10B981, #22A06B);"></div>
+                  </div>
+                </div>
+
+                <!-- Carbs -->
+                <div class="macro-bar-item">
+                  <div class="m-lbl">
+                    <span>🌾 Carbohydrates (<span id="macro-carbs-val">180</span>g / 230g)</span>
+                    <strong style="color:#2563EB;" id="macro-carbs-pct">78%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="height:8px;">
+                    <div id="macro-carbs-bar" class="progress-bar-fill" style="width: 78%; background: #2563EB;"></div>
+                  </div>
+                </div>
+
+                <!-- Fats -->
+                <div class="macro-bar-item">
+                  <div class="m-lbl">
+                    <span>🥑 Healthy Fats (<span id="macro-fats-val">48</span>g / 65g)</span>
+                    <strong style="color:#F59E0B;" id="macro-fats-pct">74%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="height:8px;">
+                    <div id="macro-fats-bar" class="progress-bar-fill" style="width: 74%; background: #F59E0B;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Today's Logged Meals Itemized Tracker -->
+              <div style="margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;">
+                  <span style="font-size:0.85rem;font-weight:700;color:var(--dark);">Today's Logged Items</span>
+                  <span style="font-size:0.75rem;color:var(--text-muted);">Click 🗑️ to delete item</span>
+                </div>
+                <div id="logged-meals-history" class="logged-meals-history-list">
+                  <!-- Populated dynamically by script.js -->
+                </div>
+
+                <!-- Prominent Reset Option for Daily Calorie & Protein Budget -->
+                <button class="btn btn-block btn-sm" style="margin-top:1rem;background:#FEE2E2;color:#DC2626;border:1px solid #FCA5A5;font-weight:700;padding:0.6rem;" onclick="resetTodayNutritionLog()">
+                  ↺ Reset Daily Calorie & Protein Budget
+                </button>
+              </div>
+            </div>
+
+            <!-- Daily Meals Grid -->
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                <h3 style="font-size:1.15rem;font-weight:700;color:var(--dark);">Select Any Meal to Add or Delete</h3>
+                <span class="badge badge-green">Live Budget Sync</span>
+              </div>
+
+              <div class="meals-list-grid">
+                <!-- Breakfast -->
+                <div class="meal-card" id="card-meal-breakfast">
+                  <div class="meal-header">
+                    <div class="meal-type-title">🌅 Breakfast</div>
+                    <span class="badge badge-green" id="badge-meal-breakfast">Ready</span>
+                  </div>
+                  <div class="meal-dish-name">Oatmeal & Fruits</div>
+                  <div class="meal-calories">380 kcal • <strong>14g Protein</strong> • 62g Carbs</div>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.8rem;">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="logMealItem('Breakfast', 'Oatmeal & Fruits', 380, 14, 62, 8, this)">
+                      + Add (+14g Pro)
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="deleteMealByName('Oatmeal & Fruits')" title="Delete/Subtract Oatmeal & Fruits" style="color:#DC2626;border-color:#FCA5A5;">
+                      - Delete
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Lunch -->
+                <div class="meal-card" id="card-meal-lunch">
+                  <div class="meal-header">
+                    <div class="meal-type-title">☀️ Lunch</div>
+                    <span class="badge badge-green" id="badge-meal-lunch">Ready</span>
+                  </div>
+                  <div class="meal-dish-name">Rice & Grilled Vegetables</div>
+                  <div class="meal-calories">560 kcal • <strong>28g Protein</strong> • 74g Carbs</div>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.8rem;">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="logMealItem('Lunch', 'Rice & Grilled Vegetables', 560, 28, 74, 14, this)">
+                      + Add (+28g Pro)
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="deleteMealByName('Rice & Grilled Vegetables')" title="Delete/Subtract Rice & Vegetables" style="color:#DC2626;border-color:#FCA5A5;">
+                      - Delete
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Dinner (Protein Bowl requested by user!) -->
+                <div class="meal-card highlighted-meal-card" id="card-meal-dinner" style="border:2px solid var(--primary);box-shadow:0 4px 16px rgba(34,160,107,0.15);">
+                  <div class="meal-header">
+                    <div class="meal-type-title">🌙 Dinner</div>
+                    <span class="badge badge-green" id="badge-meal-dinner">★ High Protein</span>
+                  </div>
+                  <div class="meal-dish-name">Protein Bowl</div>
+                  <div class="meal-calories">620 kcal • <strong style="color:var(--primary);font-size:0.95rem;">42g Protein</strong> • 55g Carbs</div>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.8rem;">
+                    <button class="btn btn-primary btn-sm" style="flex:1;background:#17251E;color:#FFFFFF;" onclick="logMealItem('Dinner', 'Protein Bowl', 620, 42, 55, 18, this)">
+                      + Add Protein Bowl (+42g Pro) 🥣
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="deleteMealByName('Protein Bowl')" title="Delete/Subtract Protein Bowl" style="color:#DC2626;border-color:#FCA5A5;">
+                      - Delete
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Snacks -->
+                <div class="meal-card" id="card-meal-snacks">
+                  <div class="meal-header">
+                    <div class="meal-type-title">🍎 Snacks</div>
+                    <span class="badge badge-amber" id="badge-meal-snacks">Snack</span>
+                  </div>
+                  <div class="meal-dish-name">Greek Yogurt & Almonds</div>
+                  <div class="meal-calories">180 kcal • <strong>12g Protein</strong> • 15g Carbs</div>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.8rem;">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="logMealItem('Snacks', 'Greek Yogurt & Almonds', 180, 12, 15, 8, this)">
+                      + Add (+12g Pro)
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="deleteMealByName('Greek Yogurt & Almonds')" title="Delete/Subtract Greek Yogurt" style="color:#DC2626;border-color:#FCA5A5;">
+                      - Delete
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Post-Workout Whey Shake -->
+                <div class="meal-card" id="card-meal-shake">
+                  <div class="meal-header">
+                    <div class="meal-type-title">⚡ Post-Workout</div>
+                    <span class="badge badge-green">Pure Protein</span>
+                  </div>
+                  <div class="meal-dish-name">Whey Protein Shake</div>
+                  <div class="meal-calories">240 kcal • <strong style="color:var(--primary);">32g Protein</strong> • 8g Carbs</div>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.8rem;">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="logMealItem('Post-Workout', 'Whey Protein Shake', 240, 32, 8, 3, this)">
+                      + Add (+32g Pro) 🥛
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="deleteMealByName('Whey Protein Shake')" title="Delete/Subtract Protein Shake" style="color:#DC2626;border-color:#FCA5A5;">
+                      - Delete
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Custom Meal Input Card -->
+                <div class="meal-card" style="background:var(--bg);border:1px dashed var(--border);">
+                  <div class="meal-header">
+                    <div class="meal-type-title">➕ Custom Item</div>
+                    <span class="badge badge-secondary">Custom</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-top:0.4rem;">
+                    <input type="text" id="custom-meal-name" placeholder="Item name" class="form-control" style="font-size:0.8rem;padding:0.35rem 0.5rem;">
+                    <input type="number" id="custom-meal-kcal" placeholder="Calories" class="form-control" style="font-size:0.8rem;padding:0.35rem 0.5rem;">
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-top:0.4rem;">
+                    <input type="number" id="custom-meal-protein" placeholder="Protein (g)" class="form-control" style="font-size:0.8rem;padding:0.35rem 0.5rem;">
+                    <input type="number" id="custom-meal-carbs" placeholder="Carbs (g)" class="form-control" style="font-size:0.8rem;padding:0.35rem 0.5rem;">
+                  </div>
+                  <button class="btn btn-outline btn-sm btn-block" style="margin-top:0.6rem;" onclick="addCustomMealItem()">
+                    + Add Custom Food
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             4. WELLNESS SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-wellness">
+          <div style="margin-bottom:2rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Holistic Wellness & Recovery</h2>
+            <p style="color:var(--text-muted);">Monitor your sleep cycles, hydration levels, mental stress, and daily mood.</p>
+          </div>
+
+          <div class="wellness-grid">
+            <!-- 1. Sleep Monitoring Card (User Maintained) -->
+            <div class="wellness-card">
+              <div class="wellness-icon-header">
+                <div class="wellness-icon" style="background:#F3E8FF;color:#9333EA;">😴</div>
+                <div>
+                  <h4 style="font-size:1.1rem;font-weight:700;">Sleep Monitoring</h4>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">Maintained by You</span>
+                </div>
+              </div>
+              <div style="font-size:2rem;font-weight:800;color:var(--dark);margin-bottom:0.3rem;">
+                <span id="wellness-sleep-hours">7.5</span> hrs 
+                <span style="font-size:0.9rem;color:var(--success);font-weight:600;" id="wellness-sleep-quality">(88% Quality)</span>
+              </div>
+              <div class="progress-bar-bg" style="margin-bottom:1rem;">
+                <div id="wellness-sleep-bar" class="progress-bar-fill" style="width: 88%; background: #9333EA;"></div>
+              </div>
+
+              <!-- Interactive Sleep Logger -->
+              <div class="sleep-logger-box">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.6rem;">
+                  <div>
+                    <label for="input-sleep-hours" style="font-size:0.75rem;font-weight:700;color:var(--text-muted);">HOURS SLEPT</label>
+                    <input type="number" id="input-sleep-hours" step="0.5" min="2" max="14" value="7.5" class="form-control">
+                  </div>
+                  <div>
+                    <label for="input-sleep-quality" style="font-size:0.75rem;font-weight:700;color:var(--text-muted);">REST RATING</label>
+                    <select id="input-sleep-quality" class="form-control">
+                      <option value="94">Deep Rest (94%)</option>
+                      <option value="88" selected>Good Rest (88%)</option>
+                      <option value="72">Fair Rest (72%)</option>
+                      <option value="55">Restless (55%)</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm btn-block" onclick="saveUserSleepLog()">
+                  Update My Sleep Log ✓
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Hydration Tracker (Customized Add & Remove Water) -->
+            <div class="wellness-card">
+              <div class="wellness-icon-header">
+                <div class="wellness-icon" style="background:var(--primary-light);color:var(--primary);">💧</div>
+                <div>
+                  <h4 style="font-size:1.1rem;font-weight:700;">Hydration Tracker</h4>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">Add or remove customized amounts</span>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:1.8rem;font-weight:800;color:var(--dark);" id="wellness-water-val">1.8 / 3.0 L</span>
+                <span class="badge badge-green" id="wellness-water-pct">60% Met</span>
+              </div>
+              <!-- Interactive clickable water glasses -->
+              <div class="hydration-cups-row">
+                <button class="water-cup-btn filled" onclick="toggleWaterCup(0)">🥛</button>
+                <button class="water-cup-btn filled" onclick="toggleWaterCup(1)">🥛</button>
+                <button class="water-cup-btn filled" onclick="toggleWaterCup(2)">🥛</button>
+                <button class="water-cup-btn filled" onclick="toggleWaterCup(3)">🥛</button>
+                <button class="water-cup-btn filled" onclick="toggleWaterCup(4)">🥛</button>
+                <button class="water-cup-btn" onclick="toggleWaterCup(5)">🥛</button>
+                <button class="water-cup-btn" onclick="toggleWaterCup(6)">🥛</button>
+                <button class="water-cup-btn" onclick="toggleWaterCup(7)">🥛</button>
+              </div>
+
+              <!-- Customized Water Adding and Removing Controls -->
+              <div class="water-custom-controls">
+                <div class="water-quick-buttons">
+                  <button class="btn btn-secondary btn-sm" onclick="addWaterCustom(0.25)">+250ml</button>
+                  <button class="btn btn-secondary btn-sm" onclick="addWaterCustom(0.50)">+500ml</button>
+                  <button class="btn btn-outline btn-sm" onclick="removeWaterCustom(0.25)">-250ml</button>
+                  <button class="btn btn-outline btn-sm" onclick="removeWaterCustom(0.50)">-500ml</button>
+                </div>
+                <div class="water-custom-input-row">
+                  <input type="number" id="water-custom-ml" value="300" step="50" min="50" max="2000" class="form-control" placeholder="ml">
+                  <button class="btn btn-primary btn-sm" onclick="addCustomWaterInput()">+ Add</button>
+                  <button class="btn btn-outline btn-sm" onclick="removeCustomWaterInput()">- Remove</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Stress Level Card (Customizable Based on Mood of the Day) -->
+            <div class="wellness-card">
+              <div class="wellness-icon-header">
+                <div class="wellness-icon" style="background:#EBF5FF;color:#2563EB;">🧘</div>
+                <div>
+                  <h4 style="font-size:1.1rem;font-weight:700;">Daily Stress Tracker</h4>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">Customized by Your Mood of the Day</span>
+                </div>
+              </div>
+              <div style="font-size:2rem;font-weight:800;color:var(--dark);margin-bottom:0.4rem;">
+                <span id="wellness-stress-score">24 / 100</span> 
+                <span class="badge badge-green" id="wellness-stress-badge" style="vertical-align:middle;">Low Stress</span>
+              </div>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.8rem;" id="wellness-stress-desc">
+                Your body is in the optimal recovery zone. Ideal readiness for heavy strength or athletic conditioning today.
+              </p>
+              <div class="progress-bar-bg" style="margin-bottom:0.8rem;">
+                <div id="wellness-stress-bar" class="progress-bar-fill" style="width: 24%; background: var(--primary);"></div>
+              </div>
+
+              <!-- Stress Level Customizer Slider -->
+              <div style="background:var(--bg);padding:0.8rem;border-radius:var(--radius-sm);border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;">
+                  <span>FINE-TUNE STRESS RATING</span>
+                  <span id="stress-slider-val" style="color:var(--primary);font-weight:800;">24 / 100</span>
+                </div>
+                <input type="range" id="custom-stress-slider" min="5" max="95" value="24" class="form-control" style="padding:0;height:24px;cursor:pointer;" oninput="onCustomStressSliderChange(this.value)">
+                <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--text-muted);margin-top:0.2rem;">
+                  <span>0 (Zen/Rest)</span>
+                  <span>50 (Moderate)</span>
+                  <span>100 (High Strain)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Customizable Guided Breathing & Meditation Studio -->
+            <div class="wellness-card" style="grid-column: span 1;">
+              <div class="wellness-icon-header" style="justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:0.8rem;">
+                  <div class="wellness-icon" style="background:#FEF3C7;color:#D97706;">🌬️</div>
+                  <div>
+                    <h4 style="font-size:1.1rem;font-weight:700;">Guided Breathing Studio</h4>
+                    <span style="font-size:0.85rem;color:var(--text-muted);">Custom Inhale & Exhale Timer</span>
+                  </div>
+                </div>
+                <button class="btn btn-outline btn-sm" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="openZenBreathingModal()" title="Open Large Screen Breathing Studio">
+                  ⛶ Open Studio
+                </button>
+              </div>
+
+              <!-- Interactive Animated Breathing Bubble -->
+              <div class="breathe-studio-box">
+                <!-- Preset Quick Buttons -->
+                <div class="breathe-presets-row" style="display:flex;gap:0.4rem;justify-content:center;margin-bottom:0.8rem;flex-wrap:wrap;">
+                  <button class="preset-pill active" onclick="applyBreathingPreset(4, 4, 4, 'Box Breathing (4-4-4)')">Box (4-4-4)</button>
+                  <button class="preset-pill" onclick="applyBreathingPreset(4, 7, 8, '4-7-8 Deep Sleep')">4-7-8 Sleep</button>
+                  <button class="preset-pill" onclick="applyBreathingPreset(5, 2, 7, 'Deep Calm (5-2-7)')">Calm (5-2-7)</button>
+                </div>
+
+                <div class="breathe-bubble-interactive" id="breathe-interactive-bubble">
+                  <span id="breathe-phase-txt">Inhale</span>
+                  <span id="breathe-phase-sec" style="font-size:0.85rem;font-weight:700;">4s</span>
+                </div>
+                <div id="breathe-status-lbl" style="font-weight:700;color:var(--primary);margin-bottom:0.2rem;">
+                  Ready to Breathe
+                </div>
+                <div style="display:flex;justify-content:center;gap:1.5rem;align-items:center;margin-bottom:0.8rem;">
+                  <div id="breathe-session-clock" style="font-size:1.3rem;font-weight:800;color:var(--dark);">
+                    02:00
+                  </div>
+                  <span class="badge badge-green" id="breathe-cycles-badge">0 Cycles</span>
+                </div>
+
+                <!-- Customizer Inputs for Inhale, Hold, Exhale -->
+                <div class="breathe-inputs-grid">
+                  <div>
+                    <label for="breathe-custom-inhale">Inhale (sec)</label>
+                    <input type="number" id="breathe-custom-inhale" value="4" min="2" max="15" class="form-control" onchange="onCustomBreathingInputChange()">
+                  </div>
+                  <div>
+                    <label for="breathe-custom-hold">Hold (sec)</label>
+                    <input type="number" id="breathe-custom-hold" value="4" min="0" max="15" class="form-control" onchange="onCustomBreathingInputChange()">
+                  </div>
+                  <div>
+                    <label for="breathe-custom-exhale">Exhale (sec)</label>
+                    <input type="number" id="breathe-custom-exhale" value="4" min="2" max="15" class="form-control" onchange="onCustomBreathingInputChange()">
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+                  <button id="breathe-play-btn" class="btn btn-primary btn-sm" onclick="toggleBreathingSession()">
+                    ▶ Start Breathing
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="resetBreathingSession()">
+                    ↺ Reset
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="openZenBreathingModal()">
+                    ⛶ Expand Timer
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Daily Mood Card (Customizable Based on Your Day) -->
+            <div class="wellness-card" style="grid-column: span 1;">
+              <div class="wellness-icon-header">
+                <div class="wellness-icon" style="background:var(--primary-light);color:var(--primary);">😊</div>
+                <div>
+                  <h4 style="font-size:1.1rem;font-weight:700;">Mood of the Day</h4>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">Calibrates stress & recovery prescription</span>
+                </div>
+              </div>
+
+              <div class="mood-selector-row" style="margin-bottom:0.8rem;gap:0.4rem;flex-wrap:wrap;">
+                <button class="mood-btn selected" id="mood-btn-Great" onclick="setDailyMood('Great', this)" title="Great (Low Stress / Prime Readiness)">😊</button>
+                <button class="mood-btn" id="mood-btn-Good" onclick="setDailyMood('Good', this)" title="Good (Mild Stress / Balanced)">🙂</button>
+                <button class="mood-btn" id="mood-btn-Zen" onclick="setDailyMood('Zen', this)" title="Zen (Mindful & Restored)">🧘</button>
+                <button class="mood-btn" id="mood-btn-Pumped" onclick="setDailyMood('Pumped', this)" title="Pumped (High Motivation)">⚡</button>
+                <button class="mood-btn" id="mood-btn-Neutral" onclick="setDailyMood('Neutral', this)" title="Neutral (Moderate Stress)">😐</button>
+                <button class="mood-btn" id="mood-btn-Tired" onclick="setDailyMood('Tired', this)" title="Tired (Elevated Fatigue)">🥱</button>
+                <button class="mood-btn" id="mood-btn-Stressed" onclick="setDailyMood('Stressed', this)" title="Stressed (High Cortisol)">😫</button>
+              </div>
+
+              <!-- Mood Drivers Tags -->
+              <div style="margin-bottom:0.8rem;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.4rem;">Mood Context Drivers</div>
+                <div style="display:flex;gap:0.4rem;flex-wrap:wrap;" id="mood-driver-tags">
+                  <button type="button" class="preset-pill active" onclick="toggleMoodTag(this, 'Great Workout 🏋️')">Workout 🏋️</button>
+                  <button type="button" class="preset-pill active" onclick="toggleMoodTag(this, 'Good Sleep 😴')">Sleep 😴</button>
+                  <button type="button" class="preset-pill" onclick="toggleMoodTag(this, 'Healthy Diet 🥗')">Diet 🥗</button>
+                  <button type="button" class="preset-pill" onclick="toggleMoodTag(this, 'Workload 💼')">Work 💼</button>
+                  <button type="button" class="preset-pill" onclick="toggleMoodTag(this, 'Family/Social ❤️')">Social ❤️</button>
+                </div>
+              </div>
+
+              <!-- Reflection Note & Save -->
+              <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <input type="text" id="input-mood-reflection" class="form-control" placeholder="Optional reflection (e.g. 'Feeling energized after morning walk')..." style="font-size:0.82rem;padding:0.45rem 0.7rem;">
+                <button class="btn btn-primary btn-sm btn-block" onclick="saveCustomDailyMoodAndStress()">
+                  Save Today's Mood & Stress Scenario ✓
+                </button>
+              </div>
+
+              <div style="margin-top:0.8rem;font-size:0.82rem;background:var(--bg);padding:0.6rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center;">
+                <span>Current State: <strong id="current-mood-name" style="color:var(--primary);">Feeling Great! 😊</strong></span>
+                <span class="badge badge-green" style="font-size:0.7rem;">Recorded</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             5. AI COACH SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-ai-coach">
+          <div style="margin-bottom:1.5rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Your Personal AI Fitness Coach</h2>
+            <p style="color:var(--text-muted);">Ask anything about workouts, diet, recovery, or wellness.</p>
+          </div>
+
+          <div class="ai-coach-container">
+            <!-- Coach Header -->
+            <div class="coach-header">
+              <div class="coach-profile">
+                <div class="coach-avatar">🤖</div>
+                <div class="coach-info">
+                  <h4>MetaAI Fitness Coach</h4>
+                  <span>● Active & Ready to Assist</span>
+                </div>
+              </div>
+              <span class="badge badge-green">Demo AI Engine</span>
+            </div>
+
+            <!-- Chat Messages Body -->
+            <div class="coach-chat-body" id="ai-coach-chat-body">
+              <div class="chat-bubble bot-bubble">
+                <div class="bubble-avatar">AI</div>
+                <div class="bubble-content">
+                  Hello Bhavya! I am your <strong>MetaAI Fitness Coach</strong>. I'm actively analyzing your workout history, sleep stats, and hydration levels. How can I help you crush your fitness goals today?
+                </div>
+              </div>
+            </div>
+
+            <!-- Suggested Quick Prompts -->
+            <div class="coach-quick-prompts">
+              <button class="prompt-pill" onclick="sendQuickPrompt('What workout should I do today?')">
+                🏋️ What workout should I do today?
+              </button>
+              <button class="prompt-pill" onclick="sendQuickPrompt('What should I eat?')">
+                🥗 What should I eat?
+              </button>
+              <button class="prompt-pill" onclick="sendQuickPrompt('How much water should I drink?')">
+                💧 How much water should I drink?
+              </button>
+              <button class="prompt-pill" onclick="sendQuickPrompt('How can I improve my sleep?')">
+                🌙 How can I improve my sleep?
+              </button>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="coach-input-area">
+              <input type="text" id="ai-coach-input" class="form-control" placeholder="Type your fitness question here (e.g. 'What workout should I do today?')...">
+              <button id="ai-coach-send-btn" class="btn btn-primary">
+                Send 🚀
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             6. PROGRESS SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-progress">
+          <div style="margin-bottom:2rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Health Records & Progress Analytics</h2>
+            <p style="color:var(--text-muted);">Comprehensive daily scenarios archive, nutrition logs, workout consistency, and milestones recorded in your login.</p>
+          </div>
+
+          <!-- =================================================================
+               DAILY HEALTH SCENARIO & 30-DAY MONTHLY ARCHIVE (RECORDED IN LOGIN)
+               ================================================================= -->
+          <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.8rem;box-shadow:var(--shadow-sm);margin-bottom:2rem;" id="daily-scenario-archive-container">
+            <!-- Header & Controls -->
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.4rem;">
+              <div>
+                <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">
+                  <span class="badge badge-green">30-Day Scenario History</span>
+                  <span class="badge badge-blue" id="archive-login-badge">Account Records Active</span>
+                </div>
+                <h3 style="font-size:1.4rem;font-weight:800;color:var(--dark);">Daily Scenario & Nutrition Archive</h3>
+                <p style="font-size:0.85rem;color:var(--text-muted);">
+                  Every day's nutrition intake, meals, mood, stress, steps, workouts, and sleep are preserved in your account. Records remain accessible when you open after a month.
+                </p>
+              </div>
+
+              <!-- Quick Date / Filter Controls -->
+              <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                <select id="archive-date-select" class="form-control" style="font-size:0.82rem;padding:0.4rem 0.8rem;min-width:180px;" onchange="onArchiveDateSelectChange(this.value)">
+                  <!-- Dynamically populated with all 30 days -->
+                </select>
+                <button class="btn btn-outline btn-sm" onclick="exportMonthlyScenarioReport()" title="Export 30-Day Health Report">
+                  📥 Export Records
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="syncLiveTodayScenario(true)" title="Save Today's Snapshot">
+                  💾 Snapshot Today
+                </button>
+              </div>
+            </div>
+
+            <!-- Active Selected Day Detailed Scenario Card -->
+            <div id="active-scenario-detail-card" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.5rem;margin-bottom:1.6rem;">
+              <!-- Populated dynamically by script.js -->
+            </div>
+
+            <!-- 30-Day Calendar Timeline Selector Carousel -->
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;">
+                <h4 style="font-size:0.95rem;font-weight:700;color:var(--dark);">Browse 30-Day Daily Scenario Timeline</h4>
+                <div style="display:flex;gap:0.4rem;">
+                  <button class="btn btn-outline btn-xs" onclick="filterArchiveDays('all')">All 30 Days</button>
+                  <button class="btn btn-outline btn-xs" onclick="filterArchiveDays('7days')">Past 7 Days</button>
+                  <button class="btn btn-outline btn-xs" onclick="filterArchiveDays('today')">Today Only</button>
+                </div>
+              </div>
+
+              <!-- Horizontally Scrollable Timeline Cards Row -->
+              <div id="archive-timeline-cards-row" class="archive-timeline-cards-row">
+                <!-- Dynamically populated by script.js with cards for each of the 30 days -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 7-Day Consistency Bar -->
+          <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.6rem;box-shadow:var(--shadow-sm);margin-bottom:2rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <h4 style="font-weight:700;color:var(--dark);">Weekly Consistency Streak</h4>
+              <span class="badge badge-green">5 Days Active</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0.8rem;text-align:center;">
+              <div style="background:var(--primary-light);padding:0.8rem;border-radius:var(--radius-sm);color:var(--primary);font-weight:700;">Mon<br>✓</div>
+              <div style="background:var(--primary-light);padding:0.8rem;border-radius:var(--radius-sm);color:var(--primary);font-weight:700;">Tue<br>✓</div>
+              <div style="background:var(--primary-light);padding:0.8rem;border-radius:var(--radius-sm);color:var(--primary);font-weight:700;">Wed<br>✓</div>
+              <div style="background:var(--primary-light);padding:0.8rem;border-radius:var(--radius-sm);color:var(--primary);font-weight:700;">Thu<br>✓</div>
+              <div style="background:var(--primary-light);padding:0.8rem;border-radius:var(--radius-sm);color:var(--primary);font-weight:700;">Fri<br>✓</div>
+              <div style="background:var(--bg);padding:0.8rem;border-radius:var(--radius-sm);color:var(--text-muted);font-weight:600;">Sat<br>Rest</div>
+              <div style="background:var(--bg);padding:0.8rem;border-radius:var(--radius-sm);color:var(--text-muted);font-weight:600;">Sun<br>Rest</div>
+            </div>
+          </div>
+
+          <div class="progress-grid">
+            <!-- Calorie Burn Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4 style="font-size:1.15rem;font-weight:700;color:var(--dark);">Calories Burned (7 Days)</h4>
+                  <span style="font-size:0.82rem;color:var(--text-muted);">Target: 600 kcal / day</span>
+                </div>
+                <span class="badge badge-green">Avg: 485 kcal</span>
+              </div>
+
+              <!-- CSS Flexbox Bar Chart -->
+              <div class="bar-chart-container">
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 120px;" title="Mon: 480 kcal"></div>
+                  <span class="bar-day-lbl">Mon</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 145px;" title="Tue: 580 kcal"></div>
+                  <span class="bar-day-lbl">Tue</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 130px;" title="Wed: 520 kcal"></div>
+                  <span class="bar-day-lbl">Wed</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar active" style="height: 105px;" title="Thu: 420 kcal (Today)"></div>
+                  <span class="bar-day-lbl">Thu</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 155px;" title="Fri: 620 kcal"></div>
+                  <span class="bar-day-lbl">Fri</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 80px;" title="Sat: 320 kcal"></div>
+                  <span class="bar-day-lbl">Sat</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 70px;" title="Sun: 280 kcal"></div>
+                  <span class="bar-day-lbl">Sun</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Steps Tracker Bar Chart -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div>
+                  <h4 style="font-size:1.15rem;font-weight:700;color:var(--dark);">Daily Step Count</h4>
+                  <span style="font-size:0.82rem;color:var(--text-muted);">Goal: 10,000 steps</span>
+                </div>
+                <span class="badge badge-blue">Avg: 8,450</span>
+              </div>
+
+              <!-- CSS Flexbox Bar Chart -->
+              <div class="bar-chart-container">
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 140px; background:#BFDBFE;" title="Mon: 8,900"></div>
+                  <span class="bar-day-lbl">Mon</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 165px; background:#BFDBFE;" title="Tue: 10,400"></div>
+                  <span class="bar-day-lbl">Tue</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 135px; background:#BFDBFE;" title="Wed: 8,600"></div>
+                  <span class="bar-day-lbl">Wed</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar active" style="height: 125px; background:#2563EB;" title="Thu: 7,842 (Today)"></div>
+                  <span class="bar-day-lbl">Thu</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 175px; background:#BFDBFE;" title="Fri: 11,200"></div>
+                  <span class="bar-day-lbl">Fri</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 90px; background:#BFDBFE;" title="Sat: 5,600"></div>
+                  <span class="bar-day-lbl">Sat</span>
+                </div>
+                <div class="chart-bar-group">
+                  <div class="chart-bar" style="height: 110px; background:#BFDBFE;" title="Sun: 6,900"></div>
+                  <span class="bar-day-lbl">Sun</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             7. ACHIEVEMENTS SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-achievements">
+          <div style="margin-bottom:2rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Achievement Badges</h2>
+            <p style="color:var(--text-muted);">Celebrate your wellness consistency and unlock performance tiers.</p>
+          </div>
+
+          <div class="badges-grid">
+            <!-- Badge 1 -->
+            <div class="badge-card" onclick="viewBadgeDetails('7 Day Streak', 'Worked out and met calorie targets for 7 consecutive days!')">
+              <div class="badge-big-icon" style="background:#FEF3C7;color:#D97706;">🏆</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">7 Day Streak</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Completed all workouts 7 days in a row.</p>
+              <span class="badge badge-green">Unlocked ✓</span>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="badge-card" onclick="viewBadgeDetails('Workout Pro', 'Successfully completed 10 high-intensity resistance sessions.')">
+              <div class="badge-big-icon" style="background:var(--primary-light);color:var(--primary);">⚡</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">Workout Pro</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Completed over 10 strength sessions.</p>
+              <span class="badge badge-green">Unlocked ✓</span>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="badge-card" onclick="viewBadgeDetails('Hydration Hero', 'Met your 3.0L water goal for 5 days in a row.')">
+              <div class="badge-big-icon" style="background:#EBF5FF;color:#2563EB;">💧</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">Hydration Hero</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Drank full water targets for 5 straight days.</p>
+              <span class="badge badge-green">Unlocked ✓</span>
+            </div>
+
+            <!-- Badge 4 -->
+            <div class="badge-card" onclick="viewBadgeDetails('Fitness Star', 'Achieved a baseline AI Fitness Score higher than 80!')">
+              <div class="badge-big-icon" style="background:#FEF3C7;color:#D97706;">⭐</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">Fitness Star</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Attained an AI Score above 80 points.</p>
+              <span class="badge badge-green">Unlocked ✓</span>
+            </div>
+
+            <!-- Badge 5 -->
+            <div class="badge-card" onclick="viewBadgeDetails('Early Bird', 'Finished a morning workout routine before 8:00 AM.')">
+              <div class="badge-big-icon" style="background:#FEE2E2;color:#EF4444;">🌅</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">Early Bird</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Completed a morning training session.</p>
+              <span class="badge badge-green">Unlocked ✓</span>
+            </div>
+
+            <!-- Badge 6: Locked -->
+            <div class="badge-card locked" onclick="viewBadgeDetails('Consistency Champion', 'Requires 30 consecutive active days. Currently at 18 days.')">
+              <div class="badge-big-icon" style="background:var(--bg);color:var(--text-muted);">🔒</div>
+              <h4 style="font-size:1.15rem;font-weight:700;margin-bottom:0.4rem;">Consistency Champion</h4>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Maintain 30-day streak (18/30 days).</p>
+              <span class="badge" style="background:var(--border);color:var(--text-muted);">60% to Unlock</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             8. PROFILE SECTION
+             =================================================================== -->
+        <section class="dashboard-section" id="section-profile">
+          <div style="margin-bottom:2rem;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:var(--dark);">User Profile & Biometrics</h2>
+            <p style="color:var(--text-muted);">Update your personal health metrics. Changes will automatically update your AI plans.</p>
+          </div>
+
+          <div class="profile-container">
+            <div class="profile-avatar-header">
+              <div class="big-avatar">B</div>
+              <div>
+                <h3 style="font-size:1.35rem;font-weight:800;color:var(--dark);">Bhavya Sri</h3>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Member ID: META-2026-WT • Intermediate Tier</p>
+                <span class="badge badge-green" style="margin-top:0.4rem;">Active AI Subscription</span>
+              </div>
+            </div>
+
+            <form id="profile-edit-form">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="profile-name">Full Name</label>
+                  <input type="text" id="profile-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="profile-email">Email Address</label>
+                  <input type="email" id="profile-email" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top:1.2rem;">
+                <div class="form-group">
+                  <label for="profile-goal">Fitness Goal</label>
+                  <select id="profile-goal" class="form-control">
+                    <option value="Weight Loss">Weight Loss</option>
+                    <option value="Muscle Gain">Muscle Gain</option>
+                    <option value="Improve Fitness">Improve Fitness</option>
+                    <option value="Improve Health">Improve Health</option>
+                    <option value="Increase Strength">Increase Strength</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="profile-level">Fitness Level</label>
+                  <select id="profile-level" class="form-control">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top:1.2rem;">
+                <div class="form-group">
+                  <label for="profile-height">Height (cm)</label>
+                  <input type="number" id="profile-height" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="profile-weight">Weight (kg)</label>
+                  <input type="number" id="profile-weight" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top:1.2rem;">
+                <label for="profile-activity">Activity Level</label>
+                <select id="profile-activity" class="form-control">
+                  <option value="Sedentary">Sedentary (Desk Job)</option>
+                  <option value="Lightly Active">Lightly Active</option>
+                  <option value="Moderately Active">Moderately Active</option>
+                  <option value="Very Active">Very Active</option>
+                </select>
+              </div>
+
+              <div style="display:flex;justify-content:flex-end;gap:1rem;margin-top:2rem;">
+                <button type="submit" class="btn btn-primary">
+                  Save Changes ✓
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       LIVE WORKOUT SESSION TIMER & POSTURE MODAL
+       ========================================================================= -->
+  <div class="modal-overlay" id="workout-timer-modal">
+    <div class="modal-box workout-session-box">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.05em;" id="session-routine-badge">
+            WORKOUT: FULL BODY STRENGTH
+          </div>
+          <h3 id="session-workout-name" style="margin-top:0.1rem;font-size:1.4rem;">Full Body Strength</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <span class="badge badge-green" id="session-day-pacing-note">Thursday: 45s</span>
+          <button class="modal-close-btn" onclick="exitWorkoutSession()">✕</button>
+        </div>
+      </div>
+
+      <div class="workout-session-body">
+        <!-- Left: Exercise Posture & Technique -->
+        <div class="posture-visual-container">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:0.4rem;">
+            <span class="posture-step-tag" id="session-step-tag">EXERCISE 1 OF 3</span>
+            <span class="badge badge-blue" id="session-posture-badge">AI Form Verified</span>
+          </div>
+
+          <h4 class="posture-exercise-name" id="session-exercise-name">Deep Bodyweight Squats</h4>
+          <span class="posture-target-muscles" id="session-target-muscles">Target: Quadriceps, Glutes, Hamstrings</span>
+
+          <!-- High-Quality AI Image of Athletic Man Demonstrating Correct Posture -->
+          <div class="posture-img-wrap">
+            <img id="session-posture-img" src="assets/images/men_strength.jpg" alt="Workout Posture" class="posture-man-img">
+            <div class="posture-overlay-badge" id="session-overlay-badge">
+              <span>⚡</span> <span id="session-alignment-text">Posture Check: Neutral Spine & Knees Aligned</span>
+            </div>
+          </div>
+
+          <!-- Form Guidance / Posture Cues -->
+          <div class="posture-cue-list">
+            <div style="font-weight:700;margin-bottom:0.3rem;color:var(--primary);display:flex;align-items:center;gap:0.4rem;">
+              <span>📋</span> Key Posture Execution Cues:
+            </div>
+            <ul id="session-posture-cues" style="list-style:disc;padding-left:1.2rem;">
+              <li>Keep chest proud, core tight, and spine in neutral balance.</li>
+              <li>Hips track back and down until thighs are parallel to ground.</li>
+              <li>Press through mid-foot and heels to drive back to standing.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Countdown Timer & Controls -->
+        <div class="timer-display-column">
+          <!-- Circular Timer Ring -->
+          <div class="timer-circle-wrap">
+            <svg class="timer-svg" viewBox="0 0 200 200">
+              <circle class="timer-circle-bg" cx="100" cy="100" r="90"></circle>
+              <circle id="timer-progress-ring" class="timer-circle-progress" cx="100" cy="100" r="90"></circle>
+            </svg>
+            <div class="timer-number-center">
+              <div class="timer-seconds-big" id="timer-seconds-text">45</div>
+              <div class="timer-label-sub" id="timer-status-text">SECONDS LEFT</div>
+            </div>
+          </div>
+
+          <!-- Audio Sound Indicator Toggle -->
+          <div style="margin-bottom:1.2rem;">
+            <button type="button" class="sound-toggle-btn" id="timer-sound-btn" onclick="toggleTimerSound()">
+              <span id="timer-sound-icon">🔊</span>
+              <span id="timer-sound-label">Timer Audio: ON</span>
+            </button>
+          </div>
+
+          <!-- Controls Buttons -->
+          <div class="timer-controls-row">
+            <button id="timer-pause-btn" class="btn btn-secondary btn-block" onclick="toggleWorkoutPause()">
+              ⏸ Pause
+            </button>
+            <button class="btn btn-primary btn-block" onclick="skipToNextExercise()">
+              Next Exercise ⏭
+            </button>
+          </div>
+
+          <button class="btn btn-outline btn-sm btn-block" onclick="exitWorkoutSession()">
+            Finish Workout Early
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       CUSTOMIZABLE ZEN INHALE & EXHALE BREATHING MODAL (WELLNESS PAGE)
+       ========================================================================= -->
+  <div id="zen-breathing-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 600px; text-align: center; padding: 2.5rem; background: radial-gradient(circle at center, #FFFFFF 0%, #F5F9F7 100%);">
+      <button class="modal-close-btn" onclick="closeZenBreathingModal()">&times;</button>
+      
+      <span class="badge badge-green" style="margin-bottom:0.6rem;">Mindfulness & Breathwork</span>
+      <h3 style="font-size:1.8rem;font-weight:800;color:var(--dark);">Custom Inhale & Exhale Studio</h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem;">
+        Calibrate your parasympathetic nervous system with customizable breath intervals.
+      </p>
+
+      <!-- Preset Pills -->
+      <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <button class="preset-pill active" id="modal-preset-box" onclick="applyBreathingPreset(4, 4, 4, 'Box Breathing (4-4-4)')">
+          📦 Box Breathing (4-4-4)
+        </button>
+        <button class="preset-pill" id="modal-preset-sleep" onclick="applyBreathingPreset(4, 7, 8, '4-7-8 Deep Sleep')">
+          🌙 4-7-8 Sleep (4-7-8)
+        </button>
+        <button class="preset-pill" id="modal-preset-calm" onclick="applyBreathingPreset(5, 2, 7, 'Deep Calm (5-2-7)')">
+          🧘 Deep Calm (5-2-7)
+        </button>
+      </div>
+
+      <!-- Large Interactive Breathing Circle -->
+      <div class="zen-bubble-container" style="position:relative;width:240px;height:240px;margin:1rem auto 1.5rem;">
+        <svg style="position:absolute;top:0;left:0;width:240px;height:240px;transform:rotate(-90deg);" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="105" fill="none" stroke="rgba(34,160,107,0.15)" stroke-width="8"></circle>
+          <circle id="modal-breathe-ring" cx="120" cy="120" r="105" fill="none" stroke="var(--primary)" stroke-width="8" stroke-linecap="round" stroke-dasharray="660" stroke-dashoffset="0" style="transition:stroke-dashoffset 0.8s linear, stroke 0.4s ease;"></circle>
+        </svg>
+
+        <div id="modal-breathe-bubble" class="breathe-bubble-interactive" style="width:170px;height:170px;margin:35px auto;transition:all 1s cubic-bezier(0.4, 0, 0.2, 1);">
+          <span id="modal-breathe-phase-txt" style="font-size:1.4rem;font-weight:800;">Inhale</span>
+          <span id="modal-breathe-phase-sec" style="font-size:1.1rem;font-weight:700;margin-top:0.2rem;">4s</span>
+        </div>
+      </div>
+
+      <!-- Live Instructions Banner -->
+      <div id="modal-breathe-instruction" style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem;">
+        Inhale slowly through your nose... Expand your belly
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+        Cycle: <strong id="modal-breathe-cycle-count" style="color:var(--dark);">0</strong> completed • Session Time: <strong id="modal-breathe-clock">02:00</strong>
+      </div>
+
+      <!-- Custom Inhale, Hold, Exhale Inputs -->
+      <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:var(--radius-md);padding:1.2rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm);">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--dark);margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:0.5px;">
+          Customize Your Own Breath Timers
+        </div>
+        <div class="breathe-inputs-grid" style="margin:0;">
+          <div>
+            <label for="modal-custom-inhale">Inhale (sec)</label>
+            <input type="number" id="modal-custom-inhale" value="4" min="2" max="15" class="form-control" onchange="syncModalCustomBreathing()">
+          </div>
+          <div>
+            <label for="modal-custom-hold">Hold (sec)</label>
+            <input type="number" id="modal-custom-hold" value="4" min="0" max="15" class="form-control" onchange="syncModalCustomBreathing()">
+          </div>
+          <div>
+            <label for="modal-custom-exhale">Exhale (sec)</label>
+            <input type="number" id="modal-custom-exhale" value="4" min="2" max="15" class="form-control" onchange="syncModalCustomBreathing()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+        <button id="modal-breathe-play-btn" class="btn btn-primary" onclick="toggleBreathingSession()" style="min-width:160px;">
+          ▶ Start Breathing
+        </button>
+        <button class="btn btn-secondary" onclick="resetBreathingSession()">
+          ↺ Reset Session
+        </button>
+        <button class="btn btn-outline" onclick="closeZenBreathingModal()">
+          Close Studio
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       CUSTOMIZABLE DAILY STEPS & TIME LOGGER MODAL
+       ========================================================================= -->
+  <div id="steps-logger-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 540px; padding: 2.2rem; background: #FFFFFF;">
+      <button class="modal-close-btn" onclick="closeStepsModal()">&times;</button>
+      
+      <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem;">
+        <div style="width:42px;height:42px;border-radius:var(--radius-md);background:#EBF5FF;color:#2563EB;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">👟</div>
+        <div>
+          <h3 style="font-size:1.5rem;font-weight:800;color:var(--dark);">Log Daily Steps</h3>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Customized step tracking synchronized by your time</p>
+        </div>
+      </div>
+
+      <!-- Current Step Status Banner -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.2rem;margin:1.2rem 0;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">TODAY'S ACCUMULATED STEPS</div>
+          <div style="font-size:1.8rem;font-weight:800;color:var(--dark);" id="modal-current-steps-display">7,842 / 10,000</div>
+        </div>
+        <span class="badge badge-blue" id="modal-steps-pct-badge">78% Goal</span>
+      </div>
+
+      <!-- Quick Add Pills -->
+      <div style="margin-bottom:1rem;">
+        <label style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Quick Add Presets</label>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button type="button" class="preset-pill" onclick="quickAddSteps(500)">+500 steps</button>
+          <button type="button" class="preset-pill" onclick="quickAddSteps(1000)">+1,000 steps</button>
+          <button type="button" class="preset-pill" onclick="quickAddSteps(2500)">+2,500 steps</button>
+          <button type="button" class="preset-pill" onclick="quickAddSteps(5000)">+5,000 steps</button>
+        </div>
+      </div>
+
+      <!-- Step Count & Time Inputs Form -->
+      <form id="steps-log-form" onsubmit="handleStepsLogSubmit(event)" style="display:flex;flex-direction:column;gap:0.9rem;">
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:0.8rem;">
+          <div>
+            <label for="input-custom-steps" style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">CUSTOM STEPS COUNT</label>
+            <input type="number" id="input-custom-steps" min="1" step="50" placeholder="e.g. 1500" value="1500" class="form-control" required>
+          </div>
+          <div>
+            <label for="input-steps-time" style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">TIME OF ACTIVITY</label>
+            <input type="text" id="input-steps-time" placeholder="08:30 AM" class="form-control" required>
+          </div>
+        </div>
+
+        <div>
+          <label for="select-steps-activity" style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">ACTIVITY SESSION / TAG</label>
+          <select id="select-steps-activity" class="form-control">
+            <option value="Morning Walk 🌅">Morning Walk 🌅</option>
+            <option value="Lunch Break Stroll ☀️">Lunch Break Stroll ☀️</option>
+            <option value="Evening Walk / Run 🌙" selected>Evening Walk / Run 🌙</option>
+            <option value="Gym Treadmill Warmup ⚡">Gym Treadmill Warmup ⚡</option>
+            <option value="Outdoor Running 🏃">Outdoor Running 🏃</option>
+            <option value="General Daily Movement 🚶">General Daily Movement 🚶</option>
+          </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:0.8rem;margin-top:0.4rem;">
+          <button type="submit" class="btn btn-primary btn-block">
+            + Add Steps to Today
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" onclick="handleDirectStepsOverride()">
+            Set Exact Total
+          </button>
+        </div>
+      </form>
+
+      <!-- Today's Logged Steps History List -->
+      <div style="margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--border);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;">
+          <span style="font-size:0.82rem;font-weight:700;color:var(--dark);">Today's Time-Stamped Step Logs</span>
+          <button class="btn btn-outline btn-xs" onclick="resetTodayStepsLog()" style="font-size:0.72rem;padding:0.2rem 0.5rem;">
+            ↺ Reset Steps
+          </button>
+        </div>
+        <div id="modal-steps-log-list" style="max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:0.4rem;">
+          <!-- Dynamically populated by script.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
